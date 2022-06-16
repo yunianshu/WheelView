@@ -17,7 +17,9 @@ package com.wx.wheelview.demo;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
@@ -55,11 +57,14 @@ public class MainActivity extends Activity {
     private void initWheel1() {
         WheelView mainWheelView = findViewById(R.id.main_wheelview);
         mainWheelView.setWheelAdapter(new ArrayWheelAdapter(this));
+        mainWheelView.setGravity(Gravity.START|Gravity.CENTER_VERTICAL);
         mainWheelView.setSkin(WheelView.Skin.Holo);
         mainWheelView.setWheelData(createMainDatas());
         WheelView.WheelViewStyle style = new WheelView.WheelViewStyle();
         style.selectedTextSize = 20;
         style.textSize = 16;
+        style.selectedTextColor = Color.RED;
+        style.textColor = Color.GREEN;
         mainWheelView.setStyle(style);
 
         WheelView subWheelView = findViewById(R.id.sub_wheelview);
@@ -71,6 +76,7 @@ public class MainActivity extends Activity {
         mainWheelView.joinDatas(createSubDatas());
 
         WheelView childWheelView = findViewById(R.id.child_wheelview);
+        childWheelView.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
         childWheelView.setWheelAdapter(new ArrayWheelAdapter(this));
         childWheelView.setSkin(WheelView.Skin.Holo);
         childWheelView.setWheelData(createChildDatas().get(createSubDatas().get(createMainDatas().get(mainWheelView

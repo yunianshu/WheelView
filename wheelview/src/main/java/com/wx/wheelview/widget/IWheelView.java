@@ -92,4 +92,11 @@ public interface IWheelView<T> {
     void joinDatas(HashMap<String, List<T>> map);
 
 
+    /**
+     *子项文本对齐方式
+     * @param gravity
+     */
+    void setGravity(int gravity);
+
+
 }

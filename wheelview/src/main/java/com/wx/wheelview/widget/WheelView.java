@@ -28,6 +28,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -55,28 +56,48 @@ import java.util.List;
  */
 public class WheelView<T> extends ListView implements IWheelView<T> {
 
-    private int mItemH = 0; // 每一项高度
-    private int mWheelSize = WHEEL_SIZE;    // 滚轮个数
-    private boolean mLoop = LOOP;   // 是否循环滚动
-    private List<T> mList = null;   // 滚轮数据列表
-    private int mCurrentPositon = -1;    // 记录滚轮当前刻度
-    private String mExtraText;  // 添加滚轮选中位置附加文本
-    private int mExtraTextColor;    // 附加文本颜色
-    private int mExtraTextSize; // 附加文本大小
-    private int mExtraMargin;   // 附加文本外边距
-    private boolean mExtraTextBold; // 附加文本是否加粗
-    private int mSelection = 0; // 选中位置
-    private boolean mClickable = CLICKABLE; // 是否可点击
+    // 每一项高度
+    private int mItemH = 0;
+    // 滚轮个数
+    private int mWheelSize = WHEEL_SIZE;
+    // 是否循环滚动
+    private boolean mLoop = LOOP;
+    // 滚轮数据列表
+    private List<T> mList = null;
+    // 记录滚轮当前刻度
+    private int mCurrentPositon = -1;
+    // 添加滚轮选中位置附加文本
+    private String mExtraText;
+    // 附加文本颜色
+    private int mExtraTextColor;
+    // 附加文本大小
+    private int mExtraTextSize;
+    // 附加文本外边距
+    private int mExtraMargin;
+    // 附加文本是否加粗
+    private boolean mExtraTextBold;
+    // 选中位置
+    private int mSelection = 0;
+    // 是否可点击
+    private boolean mClickable = CLICKABLE;
 
-    private Paint mTextPaint;   // 附加文本画笔
+    // 附加文本画笔
+    private Paint mTextPaint;
 
-    private Skin mSkin = Skin.None; // 皮肤风格
+    // 皮肤风格
+    private Skin mSkin = Skin.None;
 
-    private WheelViewStyle mStyle;  // 滚轮样式
+    // 滚轮样式
+    private WheelViewStyle mStyle;
 
-    private WheelView mJoinWheelView;   // 副WheelView
+    // 副WheelView
+    private WheelView mJoinWheelView;
 
-    private HashMap<String, List<T>> mJoinMap;    // 副滚轮数据列表
+    // 副滚轮数据列表
+    private HashMap<String, List<T>> mJoinMap;
+
+    // 文本对齐方式
+    private int itemTextGravity = Gravity.CENTER;
 
     private BaseWheelAdapter<T> mWheelAdapter;
 
@@ -342,6 +363,10 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
     }
 
     /**
+     * 子项文本对齐方式
+     */
+
+    /**
      * 设置是否支持点击滚轮进行选择
      *
      * @param clickToPosition 是否支持点击滚轮进行选择
@@ -434,8 +459,17 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
      *
      * @param map
      */
+    @Override
     public void joinDatas(HashMap<String, List<T>> map) {
         mJoinMap = map;
+    }
+
+    @Override
+    public void setGravity(int gravity) {
+        itemTextGravity = gravity;
+        if (mWheelAdapter != null) {
+            mWheelAdapter.setGravity(gravity);
+        }
     }
 
     /**
@@ -503,7 +537,7 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
     public void setWheelAdapter(BaseWheelAdapter<T> adapter) {
         super.setAdapter(adapter);
         mWheelAdapter = adapter;
-        mWheelAdapter.setData(mList).setWheelSize(mWheelSize).setLoop(mLoop).setClickable(mClickable);
+        mWheelAdapter.setData(mList).setWheelSize(mWheelSize).setGravity(itemTextGravity).setLoop(mLoop).setClickable(mClickable);
     }
 
     /**
@@ -714,7 +748,7 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            canvas.drawText(mExtraText, targetRect.centerX() + mExtraMargin,
+            canvas.drawText(mExtraText, mExtraMargin,
                     baseline, mTextPaint);
         }
     }
@@ -743,6 +777,7 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
         public float textAlpha = -1;  // 文本透明度(0f ~ 1f)
         public float selectedTextZoom = -1; // 选中文本放大倍数
         public boolean selectedTextBold; // 选中文本是否加粗
+        public int gravity = -1; // 文本位置
 
         public WheelViewStyle() {
         }
@@ -758,6 +793,7 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
             this.textAlpha = style.textAlpha;
             this.selectedTextZoom = style.selectedTextZoom;
             this.selectedTextBold = style.selectedTextBold;
+            this.gravity = style.gravity;
         }
 
     }

@@ -38,6 +38,7 @@ public class WheelItem extends FrameLayout {
 
     private ImageView mImage;
     private TextView mText;
+    private int mGravity = Gravity.CENTER;
 
     public WheelItem(Context context) {
         super(context);
@@ -61,12 +62,12 @@ public class WheelItem extends FrameLayout {
         LinearLayout layout = new LinearLayout(getContext());
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
                 WheelUtils.dip2px(getContext(),
-                WheelConstants
-                        .WHEEL_ITEM_HEIGHT));
+                        WheelConstants
+                                .WHEEL_ITEM_HEIGHT));
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setPadding(WheelConstants.WHEEL_ITEM_PADDING, WheelConstants.WHEEL_ITEM_PADDING,
                 WheelConstants
-                .WHEEL_ITEM_PADDING, WheelConstants.WHEEL_ITEM_PADDING);
+                        .WHEEL_ITEM_PADDING, WheelConstants.WHEEL_ITEM_PADDING);
         layout.setGravity(Gravity.CENTER);
         addView(layout, layoutParams);
 
@@ -85,7 +86,7 @@ public class WheelItem extends FrameLayout {
         mText.setEllipsize(TextUtils.TruncateAt.END);
         mText.setSingleLine();
         mText.setIncludeFontPadding(false);
-        mText.setGravity(Gravity.CENTER);
+        mText.setGravity(mGravity);
         mText.setTextColor(Color.BLACK);
         LayoutParams textParams = new LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.MATCH_PARENT);
@@ -111,5 +112,50 @@ public class WheelItem extends FrameLayout {
         mImage.setImageResource(resId);
     }
 
+
+    /**
+     * 获取TextView
+     */
+    public TextView getTextView() {
+        return mText;
+    }
+
+    /**
+     * 获取ImageView
+     */
+
+    public ImageView getImageView() {
+        return mImage;
+    }
+
+    /**
+     * 设置文本颜色
+     * @param color
+     */
+    public void setTextColor(int color) {
+        mText.setTextColor(color);
+    }
+
+    /**
+     * 设置文本字体大小
+     * @param size
+     */
+    public void setTextSize(int size) {
+        mText.setTextSize(size);
+    }
+
+    /**
+     * 设置文本位置
+     */
+    public void setGravity(int gravity) {
+        mGravity = gravity;
+    }
+
+    /**
+     * 获取文本位置
+     */
+    public int getGravity() {
+        return mText.getGravity();
+    }
 
 }

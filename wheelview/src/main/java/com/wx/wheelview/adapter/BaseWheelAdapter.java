@@ -15,6 +15,7 @@
  */
 package com.wx.wheelview.adapter;
 
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -38,6 +39,8 @@ public abstract class BaseWheelAdapter<T> extends BaseAdapter {
     private int mWheelSize = IWheelView.WHEEL_SIZE;
 
     private boolean mClickable = IWheelView.CLICKABLE;
+
+    private int gravity = Gravity.CENTER;
 
     private int mCurrentPositon = -1;
 
@@ -156,6 +159,16 @@ public abstract class BaseWheelAdapter<T> extends BaseAdapter {
         mList = list;
         super.notifyDataSetChanged();
         return this;
+    }
+
+    public final BaseWheelAdapter setGravity(int gravity) {
+        this.gravity = gravity;
+        super.notifyDataSetChanged();
+        return this;
+    }
+
+    public int getGravity() {
+            return gravity;
     }
 
     /**

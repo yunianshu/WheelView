@@ -41,6 +41,7 @@ public class SimpleWheelAdapter extends BaseWheelAdapter<WheelData> {
             convertView = new WheelItem(mContext);
         }
         WheelItem item = (WheelItem) convertView;
+        item.getTextView().setGravity(getGravity());
         item.setImage(mList.get(position).getId());
         item.setText(mList.get(position).getName());
         return convertView;
